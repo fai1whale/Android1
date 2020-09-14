@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val forecastRepository = ForecastRepository()
 
     // region Setup Methods
 
@@ -24,38 +28,18 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.zipcode_entry_error, Toast.LENGTH_LONG).show()
 
             }else{
-                Toast.makeText(this, zipcode, Toast.LENGTH_LONG).show()
+                forecastRepository.loadForecast(zipcode)
             }
+        }
 
+        val weeklyForecastObserver = Observer<List<DailyForecast>>{forecastItems ->
+            //update our list adapter
+
+            Toast.makeText(this,"Loaded Items", Toast.LENGTH_LONG).show()
 
         }
 
+        forecastRepository.weeklyForecast.observe(this, weeklyForecastObserver )
 
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-    //endregion Setup Methods
-
-    // region Teardown Methods
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    // endregion Teardown Methods
-
 }
