@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +34,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        val forecastList : RecyclerView = findViewById(R.id.forecastList)
+        forecastList.layoutManager = LinearLayoutManager(this)
+
+        val dailyForecastAdapter = DailyForecastAdapter()
+        forecastList.adapter = dailyForecastAdapter
+
+
         val weeklyForecastObserver = Observer<List<DailyForecast>>{forecastItems ->
             //update our list adapter
+            dailyForecastAdapter.submitList(forecastItems)
 
-            Toast.makeText(this,"Loaded Items", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this,"Loaded Items", Toast.LENGTH_LONG).show()
 
         }
 
