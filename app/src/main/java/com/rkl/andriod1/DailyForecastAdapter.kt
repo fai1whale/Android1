@@ -20,7 +20,10 @@ class DailyForecastViewHolder(view : View) : RecyclerView.ViewHolder(view){
 }
 
 class DailyForecastAdapter(
-    private val clickHan
+    //new
+    private val clickHandler: (DailyForecast) -> Unit
+
+
 ) : ListAdapter<DailyForecast, DailyForecastViewHolder>(DIFF_CONFIG) {
 
     companion object {
@@ -47,6 +50,9 @@ class DailyForecastAdapter(
 
     override fun onBindViewHolder(holder: DailyForecastViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener{
+            clickHandler(getItem(position))
+        }
     }
 
 }
